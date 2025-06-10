@@ -12,7 +12,7 @@ import { InterviewType } from '@/services/Constants'
 import { Button } from '@/components/ui/button'
 import { ArrowRight } from 'lucide-react'
 
-function FormContainer({ onHandleGenerate, updateProgress }) {
+function FormContainer({ onHandleGenerate, onClickGenerateInterviewQuestions }) {
     const [interviewType, setInterviewType] = useState([]);
     useEffect(() => {
         onHandleGenerate('interviewType', interviewType);
@@ -54,16 +54,28 @@ function FormContainer({ onHandleGenerate, updateProgress }) {
                     <h1 className='text-sm font-medium'>Interview Type</h1>
                     <div className='flex flex-wrap gap-2 '>
                         {InterviewType.map((type, index) => (
-                            <div key={type.title} className={`flex items-center gap-2 rounded-3xl p-2 border border-border hover:bg-muted cursor-pointer ${interviewType.includes(type.title) ? 'bg-muted text-primary' : 'text-muted-foreground'}`} onClick={() => handleInterviewType(type.title)}>
-                                <type.icon className={`w-4 h-4 ${interviewType.includes(type.title) ? 'text-primary' : 'text-muted-foreground'}`} />
+                            <div key={type.title} className={`flex items-center gap-2 rounded-3xl p-2 border border-border hover:bg-muted cursor-pointer ${interviewType.includes(type.title) ? 'bg-muted text-primary font-semibold' : 'text-muted-foreground'}`} onClick={() => handleInterviewType(type.title)}>
+                                <type.icon className={`w-4 h-4 ${interviewType.includes(type.title) ? 'text-primary font-semibold' : 'text-muted-foreground'}`} />
                                 <p>{type.title}</p>
                             </div>
                         ))}
                     </div>
                 </div>
+                <div className='flex flex-col gap-2'>
+                    <div className='flex gap-2 items-center'><h1 className='text-sm font-medium'>Prompt</h1><span className='text-xs text-gray-500'>&#40; optional &#41;</span></div>
+                    <Textarea
+                        placeholder={`e.g.  JavaScript interview questions for a fresher.
+                        - Focus on: variables, functions, ES6, DOM basics.
+                        - Ask 5 clear, fundamental questions.
+                        - Add 1–2 follow-ups to explore deeper understanding.`}
+                        className="h-[200px]"
+                        onChange={(e) => onHandleGenerate('jobPrompt', e.target.value)}
+                    />
+
+                </div>
             </div>
             <div className='flex justify-end mt-4'>
-                <Button onClick={() => updateProgress()}>Generate Interview Questions <ArrowRight className='w-4 h-4' /></Button>
+                <Button onClick={() => onClickGenerateInterviewQuestions()}>Generate Interview Questions <ArrowRight className='w-4 h-4' /></Button>
             </div>
         </div>
     )

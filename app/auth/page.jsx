@@ -6,18 +6,29 @@ import { Button } from '@/components/ui/button';
 import { FaGoogle, FaRocket, FaChartLine, FaSearchDollar, FaUserTie } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { supabase } from '@/services/supabaseClient';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
 
+  const router = useRouter();
+
   const signInWithGoogle = async () => {
-    // Your Google Sign-In JavaScript SDK configuration and initialization code goes here.
-    // See https://developers.google.com/identity/sign-in/web/sign-in
-    const { error } = await supabase.auth.signInWithOAuth(
-      { provider: 'google', }
-    )
-    if (error) {
-      console.error(error);
-      return;
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/dashboard`
+        }
+      });
+
+      if (error) {
+        console.error('Auth error:', error);
+        toast.error(`Login failed: ${error.message}`);
+      }
+    } catch (err) {
+      console.error('Unexpected error:', err);
+      toast.error('An unexpected error occurred');
     }
   };
 

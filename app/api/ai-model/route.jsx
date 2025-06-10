@@ -10,10 +10,10 @@ export async function POST(req) {
             throw new Error('OPENROUTER_API_KEY is not defined');
         }
 
-        const { jobPosition, jobDescription, interviewDuration, interviewType } = await req.json();
-        
+        const { jobPosition, jobDescription, interviewDuration, interviewType, jobPrompt } = await req.json();
+
         if (!jobPosition || !jobDescription || !interviewDuration || !interviewType) {
-            return NextResponse.json({ 
+            return NextResponse.json({
                 error: 'Missing required fields',
                 received: { jobPosition, jobDescription, interviewDuration, interviewType }
             }, { status: 400 });
@@ -23,7 +23,8 @@ export async function POST(req) {
             .replace('{{jobPosition}}', jobPosition)
             .replace('{{jobDescription}}', jobDescription)
             .replace('{{interviewDuration}}', interviewDuration)
-            .replace('{{interviewType}}', interviewType);
+            .replace('{{interviewType}}', interviewType)
+            .replace('{{jobPrompt}}', jobPrompt);
 
         const openai = new OpenAI({
             baseURL: "https://openrouter.ai/api/v1",
@@ -35,19 +36,20 @@ export async function POST(req) {
             messages: [
                 { role: "user", content: prompt }
             ],
+            response_format: 'json'
         })
 
         if (!completion.choices?.[0]?.message?.content) {
             throw new Error('No response content from AI model');
         }
-
-        return NextResponse.json({ 
-            message: completion.choices[0].message.content 
+        console.log(completion.choices[0].message.content);
+        return NextResponse.json({
+            message: completion.choices[0].message.content
         }, { status: 200 });
 
     } catch (error) {
         console.error('AI Model API Error:', error);
-        return NextResponse.json({ 
+        return NextResponse.json({
             error: error.message || 'Error generating questions',
             details: error.response?.data || error.stack
         }, { status: 500 });
