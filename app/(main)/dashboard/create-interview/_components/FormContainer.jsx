@@ -29,6 +29,10 @@ function FormContainer({ onHandleGenerate, onClickGenerateInterviewQuestions }) 
         <div className='bg-card rounded-lg p-4 shadow-md'>
             <div className='flex flex-col gap-4'>
                 <div className='flex flex-col gap-2'>
+                    <h1 className='text-sm font-medium'>Organization Name</h1>
+                    <Input type='text' placeholder='e.g. Google Inc.' onChange={(e) => onHandleGenerate('organizationName', e.target.value)} />
+                </div>
+                <div className='flex flex-col gap-2'>
                     <h1 className='text-sm font-medium'>Job Position</h1>
                     <Input type='text' placeholder='e.g. Software Engineer' onChange={(e) => onHandleGenerate('jobPosition', e.target.value)} />
                 </div>

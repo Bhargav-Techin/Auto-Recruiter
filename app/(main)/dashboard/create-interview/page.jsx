@@ -21,7 +21,7 @@ function CreateInterview() {
 
 
   const onClickGenerateInterviewQuestions = () => {
-    if (formData.jobPosition && formData.jobDescription && formData.interviewDuration && formData.interviewType.length) {
+    if (formData.organizationName && formData.jobPosition && formData.jobDescription && formData.interviewDuration && formData.interviewType.length) {
       onUpdateProgress()
     }
     else {

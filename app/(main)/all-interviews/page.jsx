@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { Button } from '@/components/ui/button';
 import { Plus, Calendar, Clock, Users, Building2, Eye, Share2, Briefcase, X, MapPin, FileText, Mail, MessageSquare } from 'lucide-react';
@@ -24,10 +24,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
-function LatestInterviewsList() {
+function AllInterview() {
   const router = useRouter();
   const [interviewList, setInterviewList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -39,13 +37,13 @@ function LatestInterviewsList() {
   useEffect(() => {
     // Get user email from useUser hook
     if (user?.email) {
-      fetchInterviews(user.email);
+      fetchAllInterviews(user.email);
     } else {
       setLoading(false);
     }
   }, [user]);
 
-  const fetchInterviews = async (email) => {
+  const fetchAllInterviews = async (email) => {
     try {
       setLoading(true);
 
@@ -53,8 +51,7 @@ function LatestInterviewsList() {
         .from('Interviews')
         .select('*')
         .eq('userEmail', email)
-        .order('created_at', { ascending: false })
-        .limit(6);
+        .order('created_at', { ascending: false });
 
       if (error) {
         console.error('Error fetching interviews:', error);
@@ -180,7 +177,7 @@ function LatestInterviewsList() {
 
   const LoadingSkeleton = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {[1, 2, 3, 4, 5, 6].map((i) => (
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
         <Card key={i} className="animate-pulse">
           <CardHeader>
             <div className="h-5 bg-gray-200 rounded w-3/4 mb-2"></div>
@@ -203,7 +200,7 @@ function LatestInterviewsList() {
     <div className='my-4'>
       <div className='py-4 border-b'>
         <div className="flex items-center justify-between">
-          <h2 className='text-2xl font-bold my-4'>Latest Interviews</h2>
+          <h2 className='text-2xl font-bold my-4'>All Previously Created Interviews</h2>
           <Button
             className='bg-primary text-white hover:shadow-lg hover:shadow-primary/10 transition-shadow duration-200'
             onClick={() => router.push('/dashboard/create-interview')}
@@ -352,7 +349,6 @@ function LatestInterviewsList() {
                       </div>
                     </DialogHeader>
                   </div>
-
 
                   {/* Beautiful Scrollable Content */}
                   <div className="flex-1 overflow-y-auto p-8 bg-white/50 backdrop-blur-sm">
@@ -597,4 +593,4 @@ function LatestInterviewsList() {
   );
 }
 
-export default LatestInterviewsList;
+export default AllInterview;

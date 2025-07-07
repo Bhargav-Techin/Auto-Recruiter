@@ -54,8 +54,7 @@ function QuestionList({ formData, revertProgress, onGenerateInterviewLink, setQu
                 {
                     ...formData,
                     questionsList: questionsList,
-                    userEmail: user?.email,
-                    interview_id: uuidv4()
+                    userEmail: user?.email
                 },
             ])
             .select()

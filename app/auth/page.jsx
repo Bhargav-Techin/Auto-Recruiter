@@ -7,11 +7,8 @@ import { FaGoogle, FaRocket, FaChartLine, FaSearchDollar, FaUserTie } from 'reac
 import { motion } from 'framer-motion';
 import { supabase } from '@/services/supabaseClient';
 import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
-
 export default function Login() {
 
-  const router = useRouter();
 
   const signInWithGoogle = async () => {
     try {
