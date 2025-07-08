@@ -2,80 +2,52 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/app/provider"; // from your custom context
+import { useUser } from "@/app/provider";
 
 export default function AuthGuard({ children }) {
   const router = useRouter();
-  const { user, loading } = useUser(); // Assuming your context provides a loading state
-
-  const [authState, setAuthState] = useState({
-    isChecking: true,
-    hasRedirected: false
-  });
+  const { user, loading } = useUser();
+  const [hasRedirected, setHasRedirected] = useState(false);
 
   useEffect(() => {
-    // Promise-based approach to wait for user context
-    const checkAuthentication = async () => {
-      try {
-        // Wait for user context to finish loading
-        await new Promise((resolve) => {
-          if (!loading) {
-            resolve();
-          } else {
-            const checkLoading = () => {
-              if (!loading) {
-                resolve();
-              } else {
-                setTimeout(checkLoading, 50); // Check every 50ms
-              }
-            };
-            checkLoading();
-          }
-        });
-
-        // Now safely check authentication
-        if (user === null && !authState.hasRedirected) {
-          setAuthState(prev => ({ ...prev, hasRedirected: true }));
-          router.push("/auth");
-        }
-      } catch (error) {
-        console.error("Authentication check failed:", error);
-        // Fallback redirect on error
-        if (!authState.hasRedirected) {
-          setAuthState(prev => ({ ...prev, hasRedirected: true }));
-          router.push("/auth");
-        }
-      } finally {
-        setAuthState(prev => ({ ...prev, isChecking: false }));
+    console.log("[AuthGuard] user:", user, "loading:", loading);
+    
+    // Only proceed when loading is complete
+    if (!loading) {
+      if (!user && !hasRedirected) {
+        console.log("[AuthGuard] No user found, redirecting to auth");
+        setHasRedirected(true);
+        router.push("/auth");
       }
-    };
+    }
+  }, [user, loading, hasRedirected, router]);
 
-    checkAuthentication();
-  }, [user, loading, authState.hasRedirected, router]);
-
-  // Show loading while checking authentication
-  if (authState.isChecking || loading) {
+  // Show loading while the provider is still loading user data
+  if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[200px]">
-        <div className="flex flex-col items-center space-y-3">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <p className="text-sm text-gray-500">
-            {loading ? "Loading user data..." : "Verifying authentication..."}
-          </p>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="flex flex-col items-center space-y-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          <p className="text-lg text-gray-600">Loading user data...</p>
         </div>
       </div>
     );
   }
 
-  // Show redirect message if user is null after loading
-  if (user === null) {
+  // Show redirect message if no user after loading is complete
+  if (!user) {
     return (
-      <div className="flex items-center justify-center min-h-[200px] text-sm text-gray-500">
-        Redirecting to authentication...
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="flex flex-col items-center space-y-4">
+          <div className="animate-pulse text-gray-500">
+            <p className="text-lg">Redirecting to authentication...</p>
+          </div>
+        </div>
       </div>
     );
   }
 
-  // User is authenticated - render protected content
+  // User is authenticated and loaded - render protected content
+  console.log("[AuthGuard] Rendering protected content for user:", user.email);
   return children;
 }

@@ -49,8 +49,8 @@ function StartInterview() {
     ],
     "userEmail": "bhargavprasaddas342@gmail.com",
     "organizationName": "TechNova Solutions Pvt. Ltd.",
-    "intervieweeFullName": "John Anderson",
-    "intervieweeEmail": "john.andeson@gmail.com",
+    "intervieweeFullName": "John",
+    "intervieweeEmail": "john@gmail.com",
     "intervieweeIsVerified": true
   };
 
