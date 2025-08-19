@@ -9,13 +9,15 @@ import { supabase } from '@/services/supabaseClient';
 import { toast } from 'sonner';
 export default function Login() {
 
+  const publicBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+
 
   const signInWithGoogle = async () => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/dashboard`
+          redirectTo: `${publicBaseUrl}/dashboard`
         }
       });
 

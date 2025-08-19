@@ -34,6 +34,8 @@ function AllInterview() {
   const [copied, setCopied] = useState(false);
   const { user } = useUser();
 
+  const publicBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+
   useEffect(() => {
     // Get user email from useUser hook
     if (user?.email) {
@@ -139,7 +141,7 @@ function AllInterview() {
 
   const handleShareInterview = (interviewId) => {
     if (typeof window !== 'undefined') {
-      const shareUrl = `${window.location.origin}/public-interview/${interviewId}`;
+      const shareUrl = `${publicBaseUrl}/public-interview/${interviewId}`;
       navigator.clipboard.writeText(shareUrl);
       toast.success('Interview link copied to clipboard!');
     }
@@ -147,7 +149,7 @@ function AllInterview() {
 
   const handleCopyInterviewLink = (interviewId) => {
     if (typeof window !== 'undefined') {
-      const shareUrl = `${window.location.origin}/public-interview/${interviewId}`;
+      const shareUrl = `${publicBaseUrl}/public-interview/${interviewId}`;
       navigator.clipboard.writeText(shareUrl);
       toast.success('Interview Link Copied to Clipboard');
       setCopied(true);
@@ -158,7 +160,7 @@ function AllInterview() {
   const handleShareVia = (platform, interviewId) => {
     if (typeof window === 'undefined') return;
 
-    const shareUrl = `${window.location.origin}/public-interview/${interviewId}`;
+    const shareUrl = `${publicBaseUrl}/public-interview/${interviewId}`;
     const message = "Please complete your AI interview using this link: " + shareUrl;
 
     switch (platform) {
@@ -424,7 +426,7 @@ function AllInterview() {
                             <div className="flex items-center gap-4 mb-4">
                               <div className="flex-1 bg-white/80 backdrop-blur-sm p-4 rounded-xl border border-indigo-200/40 shadow-sm">
                                 <code className="text-sm text-gray-700 break-all font-mono">
-                                  {typeof window !== 'undefined' ? `${window.location.origin}/public-interview/${selectedInterview.interview_id}` : `[domain]/public-interview/${selectedInterview.interview_id}`}
+                                  {typeof window !== 'undefined' ? `${publicBaseUrl}/public-interview/${selectedInterview.interview_id}` : `[domain]/public-interview/${selectedInterview.interview_id}`}
                                 </code>
                               </div>
                               <Button
