@@ -34,7 +34,7 @@ function AllInterview() {
   const [copied, setCopied] = useState(false);
   const { user } = useUser();
 
-  const publicBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const publicBaseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   useEffect(() => {
     // Get user email from useUser hook

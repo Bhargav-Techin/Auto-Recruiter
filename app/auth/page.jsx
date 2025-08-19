@@ -9,7 +9,7 @@ import { supabase } from '@/services/supabaseClient';
 import { toast } from 'sonner';
 export default function Login() {
 
-  const publicBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const publicBaseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 
   const signInWithGoogle = async () => {
