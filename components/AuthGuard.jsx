@@ -23,7 +23,7 @@ export default function AuthGuard({ children }) {
   }, [user, loading, hasRedirected, router]);
 
   // Show loading while the provider is still loading user data
-  if (loading) {
+  if (loading && !user) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="flex flex-col items-center space-y-4">

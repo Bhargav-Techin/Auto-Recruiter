@@ -9,50 +9,50 @@ import { toast } from 'sonner'
 import axios from 'axios';
 import { supabase } from '@/services/supabaseClient';
 import { useParams, useRouter } from 'next/navigation';
-// import { InterviewDetailsContext } from '@/context/InterviewDetailsContext';
+import { InterviewDetailsContext } from '@/context/InterviewDetailsContext';
 
 
 function StartInterview() {
-  // const { interviewDetails, setInterviewDetails } = useContext(InterviewDetailsContext)
+  const { interviewDetails, setInterviewDetails } = useContext(InterviewDetailsContext)
   const [vapi, setVapi] = useState(null);
   const [isVapiReady, setIsVapiReady] = useState(false);
 
-  const interviewDetails = {
-    "interview_id": "0767d384-9285-4989-970a-bd5ebb3f0ef2",
-    "created_at": "2025-06-13T06:50:09.20125+00:00",
-    "jobPosition": "Full Stack Web Developer",
-    "jobDescription": "We are seeking a passionate Full Stack Developer to join our dynamic product team. The ideal candidate should have experience in both front-end and back-end development and a good understanding of modern web frameworks. 🔹Responsibilities: Design and build responsive web applications. Work closely with UI/UX designers and product managers. Develop RESTful APIs and integrate with databases. Write clean, maintainable, and efficient code. 🔹 Required Skills: HTML, CSS, JavaScript React.js Node.js, Express.js MongoDB or MySQL Git, REST APIs",
-    "interviewDuration": 5,
-    "interviewType": [
-      "Behavioral",
-      "Coding",
-      "Technical"
-    ],
-    "jobPrompt": "focus on mainly the overview. dont ask for detailed explaination and generated 4-5 question only",
-    "questionsList": [
-      {
-        "question": "Tell me about a time you had to learn a new technology or framework quickly to meet a project deadline. What was your approach, and what were the biggest challenges you faced?",
-        "type": "Behavioral"
-      },
-      {
-        "question": "Describe your experience with React.js. What are some of the key benefits of using React, and what are some potential drawbacks?",
-        "type": "Technical"
-      },
-      {
-        "question": "Explain your understanding of RESTful APIs. What are the core principles that guide the design of a good RESTful API?",
-        "type": "Technical"
-      },
-      {
-        "question": "How do you approach structuring a full-stack web application, from initial design to deployment? What are some considerations you make regarding scalability and maintainability?",
-        "type": "Technical"
-      }
-    ],
-    "userEmail": "bhargavprasaddas342@gmail.com",
-    "organizationName": "TechNova Solutions Pvt. Ltd.",
-    "intervieweeFullName": "John",
-    "intervieweeEmail": "john@gmail.com",
-    "intervieweeIsVerified": true
-  };
+  // const interviewDetails = {
+  //   "interview_id": "0767d384-9285-4989-970a-bd5ebb3f0ef2",
+  //   "created_at": "2025-06-13T06:50:09.20125+00:00",
+  //   "jobPosition": "Full Stack Web Developer",
+  //   "jobDescription": "We are seeking a passionate Full Stack Developer to join our dynamic product team. The ideal candidate should have experience in both front-end and back-end development and a good understanding of modern web frameworks. 🔹Responsibilities: Design and build responsive web applications. Work closely with UI/UX designers and product managers. Develop RESTful APIs and integrate with databases. Write clean, maintainable, and efficient code. 🔹 Required Skills: HTML, CSS, JavaScript React.js Node.js, Express.js MongoDB or MySQL Git, REST APIs",
+  //   "interviewDuration": 5,
+  //   "interviewType": [
+  //     "Behavioral",
+  //     "Coding",
+  //     "Technical"
+  //   ],
+  //   "jobPrompt": "focus on mainly the overview. dont ask for detailed explaination and generated 4-5 question only",
+  //   "questionsList": [
+  //     {
+  //       "question": "Tell me about a time you had to learn a new technology or framework quickly to meet a project deadline. What was your approach, and what were the biggest challenges you faced?",
+  //       "type": "Behavioral"
+  //     },
+  //     {
+  //       "question": "Describe your experience with React.js. What are some of the key benefits of using React, and what are some potential drawbacks?",
+  //       "type": "Technical"
+  //     },
+  //     {
+  //       "question": "Explain your understanding of RESTful APIs. What are the core principles that guide the design of a good RESTful API?",
+  //       "type": "Technical"
+  //     },
+  //     {
+  //       "question": "How do you approach structuring a full-stack web application, from initial design to deployment? What are some considerations you make regarding scalability and maintainability?",
+  //       "type": "Technical"
+  //     }
+  //   ],
+  //   "userEmail": "bhargavprasaddas342@gmail.com",
+  //   "organizationName": "TechNova Solutions Pvt. Ltd.",
+  //   "intervieweeFullName": "John",
+  //   "intervieweeEmail": "john@gmail.com",
+  //   "intervieweeIsVerified": true
+  // };
 
   const [timer, setTimer] = useState('00:00:00')
   const [seconds, setSeconds] = useState(0)

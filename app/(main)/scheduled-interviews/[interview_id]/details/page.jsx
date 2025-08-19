@@ -152,16 +152,6 @@ function InterviewDetails() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-3xl font-bold text-gray-900">Interview Details</h1>
-            <div className="flex items-center space-x-3">
-              <Button variant="outline" className="flex items-center space-x-2">
-                <Filter className="w-4 h-4" />
-                <span>Filter</span>
-              </Button>
-              <Button variant="outline" className="flex items-center space-x-2">
-                <Download className="w-4 h-4" />
-                <span>Export</span>
-              </Button>
-            </div>
           </div>
         </div>
 
@@ -302,12 +292,12 @@ function InterviewDetails() {
                       </div>
                       
                       <div className="flex items-center space-x-3">
-                        {status.status === 'completed' && (
+                        {/* {status.status === 'completed' && (
                           <div className="text-right mr-4">
                             <div className="text-lg font-bold text-green-600">8.5/10</div>
                             <div className="text-xs text-gray-500">Score</div>
                           </div>
-                        )}
+                        )} */}
                         
                         <Badge className={status.color}>
                           {status.label}
