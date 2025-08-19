@@ -13,6 +13,7 @@ export default function Login() {
 
 
   const signInWithGoogle = async () => {
+    console.log(publicBaseUrl);
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
